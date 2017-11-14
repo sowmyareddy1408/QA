@@ -3,12 +3,12 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test name="Default test(failed)">
     <classes>
-      <class name="testDatabase.TC009_validateResponseJSONPath">
+      <class name="testDatabase.TC003_updateStudent">
         <methods>
           <include name="init"/>
-          <include name="getStudentDetails" invocation-numbers="0 1 2 3 4 5"/>
+          <include name="updateStudentDetails"/>
         </methods>
-      </class> <!-- testDatabase.TC009_validateResponseJSONPath -->
+      </class> <!-- testDatabase.TC003_updateStudent -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

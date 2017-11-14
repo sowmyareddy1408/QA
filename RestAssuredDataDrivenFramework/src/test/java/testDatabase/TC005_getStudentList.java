@@ -45,9 +45,9 @@ public class TC005_getStudentList {
 		System.out.println(result.getString("courses"));
 		rowCount++;
 		data = new String[rowCount][columnCount];
-		result.beforeFirst();
+		result.beforeFirst(); //cursor will move to zero position
 		for(int row=0;row<rowCount;row++){
-			result.next();
+			result.next(); // if true cursor will move to column 1 
 		for(int col=1;col<columnCount;col++)
 			data[row][col-1]=result.getString(col);
 		}
@@ -70,7 +70,7 @@ public class TC005_getStudentList {
 	
 	@Test(dataProvider="studentsList")
 	public void getStudentDetails(String id,String firstName,String lastName,String email, String programme, String courses){
-	Response response = given().pathParameters("id",id).get("/{id}");
+	Response response = given().pathParameters("id",id).when().get("/{id}");
 	System.out.println(response.body().prettyPrint());
 		
 	}

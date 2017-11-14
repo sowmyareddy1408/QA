@@ -2,6 +2,8 @@ package testExcelData;
 
 import static io.restassured.RestAssured.given;
 
+import java.util.List;
+
 import org.apache.xmlbeans.impl.common.SystemCache;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
@@ -15,7 +17,7 @@ public class TC003_StudentList extends BaseClass {
 
 	@DataProvider(name = "studentList")
 	public String[][] getTestData() {
-		String[][] finalData = excelData("Data.xlsx", "studentApp");
+		String[][] finalData = excelData("Data.xlsx", "Students");
 		return finalData;
 	}
 
@@ -26,11 +28,10 @@ public class TC003_StudentList extends BaseClass {
 		RestAssured.basePath = "/student";
 	}
 
-	@Test(dataProvider = "studentList")
-	public void getStudentDetails(String id, String firstName, String lastName, String email, String programme,
-			String courses) {
-		Response response = given().pathParameters("id", id).when().get("/{id}");
+	@SuppressWarnings("deprecation")
+	@Test(dataProvider="studentList")
+	public void getStudentDetails(String id, String firstName,String lastName,String email,String programme,String courses){
+		Response response = given().pathParameters("id",id).get("/{id}");
 		System.out.println(response.body().prettyPrint());
-	}
-
+}
 }

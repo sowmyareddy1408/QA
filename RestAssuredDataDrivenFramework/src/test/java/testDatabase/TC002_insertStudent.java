@@ -33,7 +33,7 @@ public class TC002_insertStudent  {
 			Class.forName("com.mysql.jdbc.Driver"); // loads the driver class
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/jdbc", "root", "root"); //creates connection with the database
 			Statement st = con.createStatement();// create statement
-			ResultSet result = st.executeQuery("select * from students where id=400 ");//execute the statement and return the result into the ResultSet
+			ResultSet result = st.executeQuery("select * from students where id=202 ");//execute the statement and return the result into the ResultSet
 	// for getting column count
 	ResultSetMetaData mt = result.getMetaData(); // Here ResultSetMetaData is an interface which provides in getting
 	                                             //data about data like columnCount, columnType, columnName
@@ -76,7 +76,6 @@ public class TC002_insertStudent  {
 		given().contentType(ContentType.JSON)
 		.when().body(s)
 		.post().then().statusCode(201);
-		
 	}
 	
 }

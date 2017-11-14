@@ -14,8 +14,11 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import static io.restassured.RestAssured.put;
+
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import testBase.Student;
 
@@ -31,7 +34,7 @@ public class TC003_updateStudent {
 			Class.forName("com.mysql.jdbc.Driver"); // loads the driver class
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/jdbc", "root", "root"); //creates connection with the database
 			Statement st = con.createStatement();// create statement
-			ResultSet result = st.executeQuery("select * from students where id=400 ");//execute the statement and return the result into the ResultSet
+			ResultSet result = st.executeQuery("select * from students where id=106 ");//execute the statement and return the result into the ResultSet
 	// for getting column count
 	ResultSetMetaData mt = result.getMetaData(); // Here ResultSetMetaData is an interface which provides in getting
 	                                             //data about data like columnCount, columnType, columnName
@@ -62,6 +65,7 @@ public class TC003_updateStudent {
 		RestAssured.port=8080;
 		RestAssured.basePath="/student";
 			}
+	@SuppressWarnings("deprecation")
 	@Test(dataProvider="studentsList")
 	public void updateStudentDetails(String id,String firstName,String lastName,String email, String programme, List<String> courses){
 		Student s= new Student();
@@ -69,9 +73,10 @@ public class TC003_updateStudent {
 		s.setLastName(lastName);
 		s.setEmail(email);
 		s.setProgramme(programme);
-		s.setCourses(courses);	
-		given().contentType(ContentType.JSON)
-		.when().body(s).put("/id").then().statusCode(200);
+		s.setCourses(courses);
+		given().contentType(ContentType.JSON).when().body(s).pathParameters("id", id).put("/{id}").then().statusCode(201);
+	
+
 		
 	}
 	

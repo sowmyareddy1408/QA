@@ -14,11 +14,9 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import testBase.Student;
 
-public class TC004_deleteStudent {
+public class TC006_parameters {
 	@DataProvider(name="studentsList")
 	public String[][] getData(){
 		
@@ -30,7 +28,7 @@ public class TC004_deleteStudent {
 			Class.forName("com.mysql.jdbc.Driver"); // loads the driver class
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/jdbc", "root", "root"); //creates connection with the database
 			Statement st = con.createStatement();// create statement
-			ResultSet result = st.executeQuery("select * from students where id=101 ");//execute the statement and return the result into the ResultSet
+			ResultSet result = st.executeQuery("select * from students where id=1 ");//execute the statement and return the result into the ResultSet
 	// for getting column count
 	ResultSetMetaData mt = result.getMetaData(); // Here ResultSetMetaData is an interface which provides in getting
 	                                             //data about data like columnCount, columnType, columnName
@@ -62,10 +60,9 @@ public class TC004_deleteStudent {
 		RestAssured.basePath="/student";
 			}
 	@Test(dataProvider="studentsList")
-	public void deleteStudent(String id,String firstName,String lastName,String email, String programme, List<String> courses){
-  	System.out.println(id);
-	given().pathParameters("id",id).when().delete("/{id}").then().statusCode(204);
+	public void parameters(String id,String firstName,String lastName,String email, String programme, List<String> courses){
+		Response response = given().queryParam("firstName", firstName).queryParam("lastName",lastName).pathParameters("id",id).when().get("/{id}");										
+		System.out.println(response.body().prettyPeek());		
 		
 	}
-	
 }

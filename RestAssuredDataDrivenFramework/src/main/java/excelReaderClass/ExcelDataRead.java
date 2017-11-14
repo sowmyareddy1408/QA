@@ -42,6 +42,7 @@ public class ExcelDataRead {
 			XSSFRow rows = sheet.getRow(i);      
 			for(int j=0;j<totalColumns;j++){     //internal for loop starts for the columns for that particular row to get the cells
 			XSSFCell cell = rows.getCell(j);      //here we have to start from 0 because here it will take based on rows.getCell(j) so rows=1
+			if(cell!=null){
 			if(cell.getCellType() == Cell.CELL_TYPE_STRING) //this is used for type of data in cell
 				dataSets[i-1][j]  = String.valueOf(cell.getStringCellValue());
 			else if (cell.getCellType()== Cell.CELL_TYPE_NUMERIC){
@@ -51,6 +52,7 @@ public class ExcelDataRead {
 					dataSets[i-1][j]=String.valueOf(cell.getBooleanCellValue());
 					}
 		       }
+	   		}
 	         return dataSets;
 	} catch(Exception e){
 		System.out.println("Exception in reading file"+e.getMessage());
